@@ -53,6 +53,8 @@ MongoClient.connect(
 			storeCollection
 				.insertOne(req.body)
 				.then((result) => {
+				
+
 					console.log(result)
 					res.redirect("/");
 				})

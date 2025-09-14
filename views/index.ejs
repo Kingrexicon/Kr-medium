@@ -8,19 +8,21 @@
 </head>
 
 <body>
-    <header>
+  <header>
     <div>KR Medium</div>
-    <a href="/cart" >Write</a>
+    <a href="/cart">Write</a>
   </header>
 
-
-  <div>
+  <!-- update button -->
+  <!-- <div>
     <h2>camry</h2>
     <p>$10</p>
     <button id="update-button">Replace price</button>
-  </div>
+  </div> -->
 
-  <div>
+
+  <!-- Delete Button -->
+  <!-- <div>
     <h2>Remove Item</h2>
     <p>
       Delete one Darth Vader's quote. Does nothing if there are no more Darth
@@ -28,27 +30,44 @@
     </p>
     <button id="delete-button">Delete Darth Vader's quote</button>
     <div id="message"> </div>
-  </div>
+  </div> -->
 
   <ul class="store">
     <!-- Loop through quotes -->
     <% for(var i=0; i < store.length; i++) {%>
       <li class="item">
         <!-- Output name from the iterated quote object -->
-       <div class="title">
-         <%= store[i].name %> the title is lorem 
-       <%=  Date.now() %>
-       </div>
-        
-        <!-- Output quote from the iterated quote object -->
-      <div class="data">
-          <%= store[i].quote %>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste optio blanditiis temporibus a quas at unde pariatur aperiam animi reiciendis eos accusantium laboriosam excepturi, facere similique, eum ducimus soluta reprehenderit?
-      </div>
-          <span>
-            <img src="${store[i].image}" alt="">
+        <div class="text">
+          <div class="title">
+            <%= store[i].name %> the title is lorem
+          </div>
+          <div class="flex">
+            <div class="showAuthor">
+           Written by: <%= store[i].author %>
+          </div>
+          <div class="showdate">
+            <%= store[i].date %>
+          </div> <div class="showtime">
+            <%= store[i].time %>
+          </div>
+          </div>
+          
+
+          <!-- Output quote from the iterated quote object -->
+          <div class="data">
+            <%= store[i].quote %>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste optio blanditiis
+              temporibus
+              a quas at unde pariatur aperiam animi reiciendis eos accusantium laboriosam excepturi, facere similique,
+              eum
+              ducimus soluta reprehenderit?
+          </div>
+          <textarea placeholder="Comment here" id="" cols="10" rows="5"></textarea>
+        </div>
+
+        <div class="img">
+          <img src="/uploads/1757012954004-me.jpg" width="100%" alt="">
           <%= store[i].image %>
-        </span>
-        <textarea placeholder="Comment here" id="" cols="10" rows="5"></textarea>
+        </div>
       </li>
       <% } %>
   </ul>
