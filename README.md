@@ -1,5 +1,5 @@
 KR Medium
-A simple Node.js CRUD (Create, Read, Update, Delete) application using Express, MongoDB, EJS, and Multer for file uploads. Users can create, view, update, and delete stories with optional image uploads.
+A simple Node.js CRUD (Create, Read, Update, Delete) application using Express, MongoDB, EJS, and Multer for file uploads. Users can create, view, update, and delete stories with optional image uploads. access site on this link https://kr-medium.onrender.com/
 <img width="1366" height="768" alt="Screenshot (85)" src="https://github.com/user-attachments/assets/963663bf-3d81-49a3-a254-ac9a72b3142c" />
 <img width="1366" height="768" alt="Screenshot (84)" src="https://github.com/user-attachments/assets/03d9384a-cf58-4d93-af48-adbce9b92bc7" />
 
