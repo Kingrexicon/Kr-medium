@@ -19,21 +19,40 @@ MongoClient.connect(dbConnectionStr)
 		console.log("Connected to Database");
 		const db = client.db("Kr_store");
 		const storeCollection = db.collection("store");
-
+		const commentCollection = db.collection("comments");
 		// app.use(express.static("public"));
-		app.get("/", (req, res) => {
-			db.collection("store")
-				.find()
-				.toArray()
-				.then((results) => {
-					res.render("index.ejs", { store: results });
-				})
-				.catch((error) => console.error(error));
+
+
+		app.get("/", async (req, res) => {
+			try {
+				const stores = await db.collection("store").find().toArray();
+				const comments = await db.collection("comments").find().toArray();
+				res.render("index.ejs", { store: stores, comments: comments });
+			} catch (error) {
+				console.error(error);
+				res.status(500).send("Error fetching store items");
+			}
 		});
 
 		app.get("/write", (req, res) => {
 			res.sendFile(__dirname + "/public/create_product.html");
 		});
+
+		app.get("/store/:id/comments", async (req, res) => {
+			try {
+				const storeId = req.params.id;
+				const comments = await db
+					.collection("comments")
+					.find({ storeId: storeId })
+					.toArray();
+				res.json(comments);
+				res.render("index.js", {comments: comments});
+			} catch (error) {
+				console.error(error);
+				res.status(500).send("Error fetching comments");
+			}
+		});
+
 		app.post("/store", upload.single("file"), async (req, res) => {
 			try {
 				const picture = await cloudinary.uploader.upload(req.file.path);
@@ -48,6 +67,20 @@ MongoClient.connect(dbConnectionStr)
 			} catch (error) {
 				console.error(error);
 				res.status(500).send("Error inserting item");
+			}
+		});
+
+		app.post("/comment", async (req, res) => {
+			try {
+				const result = await commentCollection.insertOne({
+					comment: req.body.comment,
+					storeId: req.body.storeId,
+				});
+				console.log(result);
+				res.redirect("/");
+			} catch (error) {
+				console.error(error);
+				res.status(500).send("Error adding comments");
 			}
 		});
 

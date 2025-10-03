@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>write up</title>
-   <link rel="shortcut icon" href="https://res.cloudinary.com/doopsbddu/image/upload/v1759479893/uq9nkjbguwitx1o20uvc.jpg" type="image/x-icon" >
+  <link rel="shortcut icon"
+    href="https://res.cloudinary.com/doopsbddu/image/upload/v1759479893/uq9nkjbguwitx1o20uvc.jpg" type="image/x-icon">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -13,13 +14,6 @@
     <div>KR Medium</div>
     <a href="/write">Write</a>
   </header>
-
-  <!-- update button -->
-  <!-- <div>
-    <h2>camry</h2>
-    <p>$10</p>
-    <button id="update-button">Replace price</button>
-  </div> -->
 
 
   <!-- Delete Button -->
@@ -39,7 +33,7 @@
       <li class="item">
         <!-- Output name from the iterated quote object -->
         <div class="text">
-          <div class="title">Title: 
+          <div class="title">Title:
             <%= store[i].name %>
           </div>
           <div class="flex">
@@ -52,8 +46,8 @@
             <div class="showtime">
               <%= store[i].time %>
             </div>
-      
-           
+
+
           </div>
 
 
@@ -63,11 +57,26 @@
           <div class="data">
             <%= store[i].quote %>
           </div>
-          <textarea placeholder="Comment here" id="" cols="10" rows="5"></textarea>
+
+          <form action="/comment" method="POST">
+            <input type="hidden" name="storeId" value="<%= store[i]._id %>">
+            <input type="text" name="comment" id="comment" placeholder="What do you think about this?">
+            <button>send</button>
+          </form>
+
+          <div>
+            <% for(var j=0; j<comments.length; j++){ %>
+              <% if(comments[j].storeId==store[i]._id.toString()) { %>
+                <p>
+                  <%= comments[j].comment %>
+                </p>
+                <% } %>
+                  <% } %>
+          </div>
         </div>
 
         <div class="img">
-       <img class="img-fluid" src="<%= store[i].image%>">
+          <img class="img-fluid" src="<%= store[i].image%>">
         </div>
       </li>
       <% } %>
