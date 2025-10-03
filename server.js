@@ -1,34 +1,19 @@
 const express = require("express");
 const app = express();
-const multer = require('multer');
+const upload = require("./middleware/multer");
+const cloudinary = require("./middleware/cloudinary");
 // const ejs = require("ejs")
- require('dotenv').config();
-const PORT = process.env.PORT
-const dbConnectionStr = process.env.DB_string
+require("dotenv").config();
+const PORT = process.env.PORT;
+const dbConnectionStr = process.env.DB_string;
 const MongoClient = require("mongodb").MongoClient;
-
-
-
-
-const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'public/uploads/'); // Images will be saved in public/uploads/
-        },
-        filename: function (req, file, cb) {
-            cb(null, Date.now() + '-' + file.originalname); // Unique filename
-        }
-    });
-
-    const upload = multer({ storage: storage });
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-MongoClient.connect(
-	dbConnectionStr,
-)
+MongoClient.connect(dbConnectionStr)
 
 	.then((client) => {
 		console.log("Connected to Database");
@@ -46,19 +31,24 @@ MongoClient.connect(
 				.catch((error) => console.error(error));
 		});
 
-		app.get("/cart", (req, res) => {
+		app.get("/write", (req, res) => {
 			res.sendFile(__dirname + "/public/create_product.html");
 		});
-		app.post("/store", upload.single("image"), (req, res) => {
-			storeCollection
-				.insertOne(req.body)
-				.then((result) => {
-				
-
-					console.log(result)
-					res.redirect("/");
-				})
-				.catch((error) => console.error(error));
+		app.post("/store", upload.single("file"), async (req, res) => {
+			try {
+				const picture = await cloudinary.uploader.upload(req.file.path);
+				const result = await storeCollection.insertOne({
+					name: req.body.name,
+					image: picture.secure_url,
+					cloudinaryId: picture.public_id,
+					quote: req.body.quote,
+				});
+				console.log(result);
+				res.redirect("/");
+			} catch (error) {
+				console.error(error);
+				res.status(500).send("Error inserting item");
+			}
 		});
 
 		app.put("/store", (req, res) => {
@@ -69,7 +59,7 @@ MongoClient.connect(
 						$set: {
 							name: req.body.name,
 							quote: req.body.quote,
-							image:req.body.image,
+							image: req.body.image,
 						},
 					},
 					{
@@ -101,5 +91,5 @@ MongoClient.connect(
 // });
 
 app.listen(PORT, function () {
-	console.log("listenening on port 4000");
+	console.log(`listenening on port ${PORT}`);
 });

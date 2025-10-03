@@ -3,14 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Star Wars Quote App</title>
+  <title>write up</title>
+   <link rel="shortcut icon" href="https://res.cloudinary.com/doopsbddu/image/upload/v1759479893/uq9nkjbguwitx1o20uvc.jpg" type="image/x-icon" >
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
   <header>
     <div>KR Medium</div>
-    <a href="/cart">Write</a>
+    <a href="/write">Write</a>
   </header>
 
   <!-- update button -->
@@ -34,39 +35,39 @@
 
   <ul class="store">
     <!-- Loop through quotes -->
-    <% for(var i = store.length - 1; i >= 0; i--) {%>
+    <% for(var i=store.length - 1; i>= 0; i--) {%>
       <li class="item">
         <!-- Output name from the iterated quote object -->
         <div class="text">
-          <div class="title">
-            <%= store[i].name %> the title is lorem
+          <div class="title">Title: 
+            <%= store[i].name %>
           </div>
           <div class="flex">
             <div class="showAuthor">
-           Written by: <%= store[i].author %>
+              Written by: <%= store[i].author %>
+            </div>
+            <div class="showdate">
+              <%= store[i].date %>
+            </div>
+            <div class="showtime">
+              <%= store[i].time %>
+            </div>
+      
+           
           </div>
-          <div class="showdate">
-            <%= store[i].date %>
-          </div> <div class="showtime">
-            <%= store[i].time %>
-          </div>
-          </div>
-          
+
+
+
 
           <!-- Output quote from the iterated quote object -->
           <div class="data">
-            <%= store[i].quote %>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste optio blanditiis
-              temporibus
-              a quas at unde pariatur aperiam animi reiciendis eos accusantium laboriosam excepturi, facere similique,
-              eum
-              ducimus soluta reprehenderit?
+            <%= store[i].quote %>
           </div>
           <textarea placeholder="Comment here" id="" cols="10" rows="5"></textarea>
         </div>
 
         <div class="img">
-          <img src="/uploads/1757012954004-me.jpg" width="100%" alt="">
-          <%= store[i].image %>
+       <img class="img-fluid" src="<%= store[i].image%>">
         </div>
       </li>
       <% } %>

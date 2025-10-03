@@ -6,6 +6,9 @@
 body {
 	background: linear-gradient(to right, black, rgb(51, 51, 51), black);
 }
+.img-fluid{
+	width: 100%;
+}
 .flex {
 	display: flex;
 	flex-direction: row;
@@ -143,6 +146,10 @@ li .img{
 	filter: grayscale(0);
     transition: ease-in-out;
 
+}
+
+.form-control{
+	display: none;;
 }
 
 @media screen and (max-width: 800px) {
